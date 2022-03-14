@@ -1,12 +1,13 @@
 
 require('dotenv').config();
-const morgan = require('morgan');
+require('express-async-errors');
 
 
 //rest of the packages
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser')
+const morgan = require('morgan');
 const rateLimiter = require('express-rate-limit');
 const helmet = require('helmet');
 const xss = require('xss-clean');
@@ -23,9 +24,11 @@ const connectDB = require('./DB/connect');
 
 
 //ROUTES
-const leaguesRouter = require('./routes/leagueRoutes')
-const teamsRouter = require('./routes/teamsRoutes')
-const playersRouter = require('./routes/playersRoutes')
+const leaguesRouter = require('./routes/leagueRoute')
+const teamsRouter = require('./routes/teamsRoute')
+const playersRouter = require('./routes/playersRoute')
+const AuthRouter = require('./routes/authRoute')
+const UserRouter = require('./routes/userRoute')
 
 
 
@@ -34,15 +37,16 @@ const playersRouter = require('./routes/playersRoutes')
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECT))
-app.use(notFoundMiddleware)
-app.use(errorHandlerMiddleware)
 
 
 
-//
+
+
 app.use('/api/leagues', leaguesRouter);
 app.use('/api/teams', teamsRouter);
 app.use('/api/players', playersRouter);
+app.use('/api/auth', AuthRouter);
+app.use('/api/users', UserRouter);
 
 
 
@@ -62,6 +66,10 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 app.use(mongoSanitize());
+
+
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
 
 //port
 const port = process.env.PORT || 5500;

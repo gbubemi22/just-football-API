@@ -1,5 +1,5 @@
 const {StatusCodes} = require('http-status-codes')
-const Team = require('../models/Team');
+const Team = require('../models/TeamModel');
 const CustomError = require('../errors');
 const path = require('path');
 
@@ -9,7 +9,7 @@ const path = require('path');
 
 
 const createTeam = async (req, res) =>{
-    req.body.user = req.user.userId;
+    req.body.user = req.body;
     const team = await Team.create(req.body);
     res.status(StatusCodes.CREATED).json({ team });   
 }
@@ -70,7 +70,7 @@ const getAllTeams = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Success! team removed.' });
   };
 
-model.exports = {
+module.exports = {
     createTeam,
     getSingleTeam,
     getAllTeams,

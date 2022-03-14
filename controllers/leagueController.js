@@ -1,4 +1,4 @@
-const League = require('../models/League')
+const League = require('../models/LeagueModel')
 const {StatusCodes} = require('http-status-codes')
 const CustomError = require('../errors');
 const path = require('path');
@@ -8,17 +8,17 @@ const path = require('path');
 
 
 const createLeague =  async (req, res) =>{
-    req.body.user = req.user.userId;
+    req.body.user = req.body;
     const league = await League.create(req.body);
     res.status(StatusCodes.CREATED).json({ league });   
 }
 
 
 const getAllLeagues = async (req, res) =>{
-    const leagues = await League.find({});
+    const leagues = await League.find({ });
 
     res.status(StatusCodes.OK).json({ leagues, count: leagues.length }); 
-
+    console.log(leagues)
 }
 
 

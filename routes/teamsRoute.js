@@ -13,14 +13,14 @@ const {
 
 router
 .route('/')
-.post(createLeague)
-.get(getAllLeagues)
+.post(createTeam)
+.get(getAllTeams)
 
 
 router.route('/:id')
-.get(getSingleLeague)
-.patch(updateLeague)
-.delete(deleteLeague)
+.get(getSingleTeam)
+.patch(updateTeam)
+.delete(deleteTeam)
 
 
 module.exports = router;

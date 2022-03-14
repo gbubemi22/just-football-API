@@ -1,5 +1,5 @@
 const {StatusCodes} = require('http-status-codes')
-const Player = require('../models/player');
+const Player = require('../models/playerModel');
 const CustomError = require('../errors');
 const path = require('path');
 
@@ -9,7 +9,7 @@ const path = require('path');
 
 
 const createPlayer = async (req, res) =>{
-    req.body.user = req.user.userId;
+    req.body.user = req.body;
     const player = await Player.create(req.body);
     res.status(StatusCodes.CREATED).json({ player });   
 }
@@ -70,7 +70,7 @@ const getAllPlayers = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Success! player removed.' });
   };
 
-model.exports = {
+module.exports = {
     createPlayer,
     getSinglePlayer,
     getAllPlayers,
