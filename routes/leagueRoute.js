@@ -10,16 +10,21 @@ const {
 } = require('../controllers/leagueController')
 
 
+const {
+    authenticateUser,
+    authorizePermissions,
+  } = require('../middleware/authentication');
+
 router
 .route('/')
-.post(createLeague)
+.post(authenticateUser,authorizePermissions('superAdmin'),createLeague)
 .get(getAllLeagues)
 
 
 router.route('/:id')
-.get(getSingleLeague)
-.patch(updateLeague)
-.delete(deleteLeague)
+.get(authenticateUser,getSingleLeague)
+.patch(authenticateUser,authorizePermissions('superAdmin'),updateLeague)
+.delete(authenticateUser,authorizePermissions('superAdmin'),deleteLeague)
 
 
 module.exports = router;

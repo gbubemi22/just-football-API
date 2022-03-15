@@ -10,17 +10,25 @@ const {
     deletePlayer,
 } = require('../controllers/playerController')
 
+const {
+    authenticateUser,
+    authorizePermissions,
+  } = require('../middleware/authentication');
+
+
+
 
 router
 .route('/')
-.post(createPlayer)
+.post(authenticateUser,authorizePermissions('superAdmin'),createPlayer)
 .get(getAllPlayers)
 
 
 router.route('/:id')
-.get(getSinglePlayer)
-.patch(updatePlayer)
-.delete(deletePlayer)
+.get(authenticateUser,getSinglePlayer)
+.get(authenticateUser,getSinglePlayer)
+.patch(authenticateUser,authorizePermissions('superAdmin'),updatePlayer)
+.delete(authenticateUser,authorizePermissions('superAdmin'),deletePlayer)
 
 
 module.exports = router;
