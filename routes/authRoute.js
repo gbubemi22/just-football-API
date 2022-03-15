@@ -1,13 +1,17 @@
-const User = require('../models/User')
-const {StatusCodes} = require('http-status-codes')
-
 const express = require('express');
 const router = express.Router()
 
-router.post('/', async (req, res)  => {
-    try {
-        
-    } catch (error) {
-        
-    }
-})
+
+
+const {
+    register,
+  login,
+  logout,
+} = require('../controllers/authController')
+
+router.post('/register', register)
+router.post('/login', login)
+router.get('/logout', logout)
+
+
+module.exports = router;
