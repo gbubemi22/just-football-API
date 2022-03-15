@@ -1,7 +1,9 @@
 const {StatusCodes} = require('http-status-codes')
 const Team = require('../models/TeamModel');
+const League = require('../models/LeagueModel')
 const CustomError = require('../errors');
 const path = require('path');
+const fs = require('fs')
 
 
 
@@ -27,12 +29,12 @@ const getAllTeams = async (req, res) => {
   const getSingleTeam = async (req, res) => {
     const { id: teamId } = req.params;
   
-    const team = await Team.findOne({ _id: teamId })
+    const team = await Team.findOne({ _id: teamId }).populate('league')
   
     if (!team) {
       throw new CustomError.NotFoundError(`No team with id : ${teamId}`);
     }
-  
+    console.log(team)
     res.status(StatusCodes.OK).json({ team });
   };
 

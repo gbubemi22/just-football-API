@@ -6,21 +6,26 @@ getAllUsers,
 getSingleUser,
 updateUser,
 updatePassword,
-} = require('../controllers/userController')
+} = require('../controllers/userController');
+
+const {
+    authenticateUser,
+    authorizePermissions
+} = require('../middleware/authentication')
 
 
 router.route('/')
-.get(getAllUsers)
+.get(authenticateUser,authorizePermissions('admin','superAdmin'), getAllUsers)
 
 
 
 router.route('/:id')
-.get(getSingleUser)
+.get(authenticateUser,getSingleUser)
 
 router
 .route('/updateUser')
-.patch(updateUser)
-router.route('/updatePassword').patch(updatePassword)
+.patch(authenticateUser, updateUser)
+router.route('/updatePassword').patch(authenticateUser, updatePassword)
 
 
 

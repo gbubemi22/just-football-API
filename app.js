@@ -13,6 +13,8 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
 const mongoSanitize = require('express-mongo-sanitize');
+const bodyParser = require('body-parser')
+
 
 
 
@@ -36,6 +38,7 @@ const UserRouter = require('./routes/userRoute')
 
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(bodyParser.json())
 app.use(cookieParser(process.env.JWT_SECT))
 
 
