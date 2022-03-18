@@ -28,7 +28,7 @@ const getAllTeams = async (req, res) => {
 
   const getSingleTeam = async (req, res) => {
     const { id: teamId } = req.params;
-    const { id: leagueId } = req.params;
+    
     const league = await League.findById(leagueId)
     const team = await Team.findOne({ _id: teamId }).populate('league_id','League')
     .populate({path: 'league_id', select:['leaguename', 'location', 'logo']}) 
@@ -42,7 +42,7 @@ const getAllTeams = async (req, res) => {
 
 
 
-
+ 
   const updateTeam = async (req, res) => {
     const { id: teamId } = req.params;
   
