@@ -29,7 +29,7 @@ const getAllTeams = async (req, res) => {
   const getSingleTeam = async (req, res) => {
     const { id: teamId } = req.params;
   
-    const team = await Team.findOne({ _id: teamId }).populate('league')
+    const team = await Team.findOne({ _id: teamId }).populate('League')
   
     if (!team) {
       throw new CustomError.NotFoundError(`No team with id : ${teamId}`);
