@@ -2,17 +2,10 @@ const League = require("../models/LeagueModel");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
-const  upload = require('../middleware/uploadImage')
+
 
 const createLeague =  async (req, res) => {
-  // const league  = new League({
-  //   leaguename:req.body.leaguename,
-  //   location: req.body.location,
-  //   logo: req.file.path
-  // })
-  // console.log(req.file.path)
-  // const newleague = await league.save()
-  // res.status(StatusCodes.OK).json(newleague)
+  
   req.body.user = req.body;
   const league = await League.create(req.body);
   res.status(StatusCodes.CREATED).json({ league });
@@ -65,10 +58,39 @@ const deleteLeague = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "Success! League removed." });
 };
 
+
+const uploadImage = async (req, res) => {
+  if (!req.files) {
+    throw new CustomError.BadRequestError('No File Uploaded');
+  }
+  const logo = req.files.image;
+
+  if (!logo.mimetype.startsWith('image')) {
+    throw new CustomError.BadRequestError('Please Upload Image');
+  }
+
+  const maxSize = 1024 * 1024* 5;
+
+  if (logo.size > maxSize) {
+    throw new CustomError.BadRequestError(
+      'Please upload image smaller than 5MB'
+    );
+  }
+
+  const imagePath = path.join(
+    __dirname,
+    '../public/uploads/' + `${logo.name}`
+  );
+  await logo.mv(imagePath);
+  res.status(StatusCodes.OK).json({ image: `/uploads/${logo.name}` });
+};
+
+
 module.exports = {
   createLeague,
   getAllLeagues,
   getSingleLeague,
   updateLeague,
   deleteLeague,
+  uploadImage,
 };

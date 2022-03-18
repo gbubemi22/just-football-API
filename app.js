@@ -14,6 +14,9 @@ const xss = require('xss-clean');
 const cors = require('cors');
 const mongoSanitize = require('express-mongo-sanitize');
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload');
+
+
 
 
 
@@ -41,7 +44,8 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser(process.env.JWT_SECT))
-app.use('/uploads',express.static('uploads'));
+app.use(express.static('./public'));
+app.use(fileUpload());
 
 
 

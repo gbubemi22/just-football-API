@@ -70,10 +70,17 @@ const getAllPlayers = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Success! player removed.' });
   };
 
+
+  
+
+  
+
 module.exports = {
     createPlayer,
     getSinglePlayer,
     getAllPlayers,
     updatePlayer,
     deletePlayer,
+    
+    
 }

@@ -3,7 +3,7 @@ const Team = require('../models/TeamModel');
 const League = require('../models/LeagueModel')
 const CustomError = require('../errors');
 const path = require('path');
-const fs = require('fs')
+
 
 
 
@@ -71,6 +71,9 @@ const getAllTeams = async (req, res) => {
     await product.remove();
     res.status(StatusCodes.OK).json({ msg: 'Success! team removed.' });
   };
+
+
+  
 
 module.exports = {
     createTeam,
