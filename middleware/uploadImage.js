@@ -2,10 +2,26 @@ const path = require('path')
 const fs = require('fs')
 const multer = require('multer')
 const Grid = require('gridfs-stream')
-const GridFsStorage = require
+const GridFsStorage = require('multer-gridfs-storage')
 
   
+const storage = new GridFsStorage({
+    url: process.env.MONGO_URI,
+    file: (req, file) => {
+        const match = ["image/png", "image/jpeg"]
 
+        if (match.indextOf(file.minetype)=== -1) {
+            const filename = `${Date.now()}-any-name-${file.originalname}`;
+           return filename 
+        }
+        return {
+            bucketName: "photos",
+            filename:`${Date.now()}-any-name-${file.originalname}`
+        }
+    }
+})
+
+module.exports = multer({storage})
 
 
 
