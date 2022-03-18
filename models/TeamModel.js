@@ -2,10 +2,9 @@ const mongoose = require('mongoose')
 
 const TeamSchema = new mongoose.Schema({
   league_id: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: 'League',
-    required: true
-  },
+    },
   team:{
     type: String, required: true,
     required: [true, 'please provide a name'],
