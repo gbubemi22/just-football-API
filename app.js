@@ -33,23 +33,25 @@ const AuthRouter = require('./routes/authRoute')
 const UserRouter = require('./routes/userRoute')
 
 
-
+//app.use(express.static(__dirname, 'public'));
 
 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser(process.env.JWT_SECT))
+app.use('/uploads',express.static('uploads'));
 
 
 
-
-
+ 
 app.use('/api/leagues', leaguesRouter);
 app.use('/api/teams', teamsRouter);
 app.use('/api/players', playersRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/users', UserRouter);
+
 
 
 

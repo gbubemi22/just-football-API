@@ -11,13 +11,12 @@ const LeagueSchema = new mongoose.Schema({
       type: String,
       required: true,
       trim: true,
-      maxlength: [15, 'Name can not be more than 15 characters'],
+      maxlength: [60, 'Name can not be more than 60 characters'],
   },
      logo: {
       type: String, 
-      required: true, 
-      trim: true,
-      maxlength: [5, 'Name can not be more than 5 characters'],
+      required:true,
+        
      }, 
   
 }, {timestamps: true})

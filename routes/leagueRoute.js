@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router()
+const upload = require('../middleware/uploadImage')
+const path = require('path')
+
+
 
 const {
     createLeague,
@@ -17,8 +21,10 @@ const {
 
 router
 .route('/')
-.post(authenticateUser,authorizePermissions('superAdmin'),createLeague)
+.post(authenticateUser,authorizePermissions('superAdmin'),upload.single('logo'),createLeague)
 .get(getAllLeagues)
+
+
 
 
 router.route('/:id')

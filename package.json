@@ -23,6 +23,7 @@
     "express-async-errors": "^3.1.1",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^6.3.0",
+    "gridfs-stream": "^1.1.1",
     "helmet": "^5.0.2",
     "http-status-codes": "^2.2.0",
     "joi": "^17.6.0",
@@ -30,6 +31,8 @@
     "mongo-sanitize": "^1.1.0",
     "mongoose": "^6.1.8",
     "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   }

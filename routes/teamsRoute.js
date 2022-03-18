@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-
+const upload = require('../middleware/uploadImage')
 
 const {
     createTeam,
@@ -15,6 +15,11 @@ const {
     authorizePermissions,
   } = require('../middleware/authentication');
 
+
+
+  // router
+  // .route('/uploadImage')
+  // .post([authenticateUser, authorizePermissions('superAdmin')], upload);
 
 
 router
