@@ -2,8 +2,9 @@ const League = require("../models/LeagueModel");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
+const  upload = require('../middleware/uploadImage')
 
-const createLeague = async (req, res) => {
+const createLeague =  async (req, res) => {
   // const league  = new League({
   //   leaguename:req.body.leaguename,
   //   location: req.body.location,
