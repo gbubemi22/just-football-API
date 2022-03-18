@@ -21,7 +21,7 @@ const {
 
 router
 .route('/')
-.post(authenticateUser,authorizePermissions('superAdmin'),upload.single('logo'),createLeague)
+.post(authenticateUser,authorizePermissions('superAdmin'),createLeague)
 .get(getAllLeagues)
 
 

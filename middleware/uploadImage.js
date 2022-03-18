@@ -1,55 +1,34 @@
+const { StatusCodes } = require('http-status-codes');
+const CustomError = require('../errors');
+
 const path = require('path')
-const fs = require('fs')
-const multer = require('multer')
-const Grid = require('gridfs-stream')
-const {GridFSBucket} = require('multer-gridfs-storage')
 
-  
-const storage = new GridFSBucket({
-    url: process.env.MONGO_URI,
-    file: (req, file) => {
-        const match = ["image/png", "image/jpeg"]
 
-        if (match.indextOf(file.minetype)=== -1) {
-            const filename = `${Date.now()}-any-name-${file.originalname}`;
-           return filename 
-        }
-        return {
-            bucketName: "photos",
-            filename:`${Date.now()}-any-name-${file.originalname}`
-        }
+
+const uploadImage = async (req, res) => {
+    if (!req.files) {
+      throw new CustomError.BadRequestError('No File Uploaded');
     }
-})
+    const logo = req.files.image;
+  
+    if (!logo.mimetype.startsWith('image')) {
+      throw new CustomError.BadRequestError('Please Upload Image');
+    }
+  
+    const maxSize = 1024 * 1024* 5;
+  
+    if (logo.size > maxSize) {
+      throw new CustomError.BadRequestError(
+        'Please upload image smaller than 5MB'
+      );
+    }
+  
+    const imagePath = path.join(
+      __dirname,
+      '../public/uploads/' + `${logo.name}`
+    );
+    await logo.mv(imagePath);
+    res.status(StatusCodes.OK).json({ image: `/uploads/${logo.name}` });
+  };
 
-module.exports = multer({storage})
-
-
-
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb ) {
-//         cb(null, './uploads/')
-//     },
-//     filename: function (req, file, cb){
-    
-//      cb(null, Date.now().toISOString() + file.originalname)
-//     }
-// });
-
-// const fileFilter = (req, file, cb) => {
-//     if(file.minetype === 'image/jpeg' || file.minetype === 'image/png') {
-//     cb(null, true)
-// } else {
-//     cb(null,false)
-//   };
-// }
-
-// const upload = multer({
-//     storage: storage,
-// limits: {
-//     fileSize: 1024 * 1024 * 5
-// },
-//  fileFilter: fileFilter
-// });
-
-
-module.exports = upload;
+  module.exports = uploadImage;
