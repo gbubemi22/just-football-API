@@ -27,13 +27,30 @@ const getAllPlayers = async (req, res) => {
   const getSinglePlayer = async (req, res) => {
     const { id: playerId } = req.params;
   
-    const player = await Player.findOne({ _id: teamId })
+    const player = await Player.findOne({ _id: playerId })
+    
+  
   
     if (!player) {
       throw new CustomError.NotFoundError(`No player with id : ${playerId}`);
     }
   
-    res.status(StatusCodes.OK).json({ team });
+    res.status(StatusCodes.OK).json({ player });
+  };
+
+  const getSinglePlayerAndTeam = async (req, res) => {
+    const { id: playerId } = req.params;
+  
+    const player = await Player.findOne({ _id: playerId })
+    .populate({path:'team', select:['team', 'nickname']}) 
+  
+  
+    if (!player) {
+      throw new CustomError.NotFoundError(`No player with id : ${playerId}`);
+    }
+  
+    res.status(StatusCodes.OK).json({ player });
+    console.log(player)
   };
 
 
@@ -81,6 +98,7 @@ module.exports = {
     getAllPlayers,
     updatePlayer,
     deletePlayer,
+    getSinglePlayerAndTeam,
     
     
 }

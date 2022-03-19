@@ -23,6 +23,14 @@ const getSingleUser = async (req, res) => {
 };
 
 
+const getAdminAndSuperAdmin = async (req, res) => {
+  const admins = await User.find({role: 'admin'}).select('-password')
+  res.status(StatusCodes.OK).json({ admin: admins})
+  
+}
+
+
+
 
 
 const updateUser = async (req, res) => {
@@ -63,6 +71,8 @@ module.exports = {
     getSingleUser,
     updateUser,
     updatePassword,
+    getAdminAndSuperAdmin,
+    
 }
 
 

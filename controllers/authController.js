@@ -21,7 +21,7 @@ const register =  async (req, res)  => {
   }
 
   const isFirstAccount = (await User.countDocuments({})) === 0;
-  const role = isFirstAccount ? 'superAdmin' : 'admin';
+  const role = isFirstAccount ? 'admin' : 'user';
 
   const user = await User.create({ fullname, username, email, phonenumber, password , role });
 
