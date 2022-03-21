@@ -1,13 +1,8 @@
 const mongoose = require('mongoose')
 
 const TeamSchema = new mongoose.Schema({
-  league_id: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'League',
-    required: true
-  },
   team:{
-    type: String, required: true,
+    type: String, required: true, unique: true,
     required: [true, 'please provide a name'],
     trim: true,
     maxlength: [15, 'Name can not be more than 15 characters'],
@@ -18,20 +13,13 @@ const TeamSchema = new mongoose.Schema({
       trim: true,
       maxlength: [15, 'Name can not be more than 15 characters'],
     },
-    
+    League_id: {
+      type: mongoose.Schema.ObjectId,
+      required: true
+    },
    
 
     
-}, {timestamps: true,  toJSON: { virtuals: true }, toObject: { virtuals: true }}
-);
-
-TeamSchema.virtual('league', {
-  ref: 'League',
-  localField: 'league_id',
-  foreignField: '_id',
-  justOne: true,
-   
-});
-
+}, {timestamps: true})
 
 module.exports = mongoose.model('Team', TeamSchema);

@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router()
 
-
-
-
-
 const {
     createLeague,
     getAllLeagues,
     getSingleLeague,
     updateLeague,
     deleteLeague,
-    uploadImage
 } = require('../controllers/leagueController')
 
 
@@ -24,11 +19,6 @@ router
 .route('/')
 .post(authenticateUser,authorizePermissions('superAdmin'),createLeague)
 .get(getAllLeagues)
-
-router
-  .route('/uploadImage')
-  .post([authenticateUser, authorizePermissions('admin')], uploadImage);
-
 
 
 router.route('/:id')

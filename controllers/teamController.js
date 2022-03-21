@@ -3,7 +3,7 @@ const Team = require('../models/TeamModel');
 const League = require('../models/LeagueModel')
 const CustomError = require('../errors');
 const path = require('path');
-
+const fs = require('fs')
 
 
 
@@ -28,9 +28,8 @@ const getAllTeams = async (req, res) => {
 
   const getSingleTeam = async (req, res) => {
     const { id: teamId } = req.params;
-    
-    const team = await Team.findOne({ _id: teamId })
-    .populate({path: 'league', select:['leaguename', 'location', 'logo']}) 
+  
+    const team = await Team.findOne({ _id: teamId }).populate('league')
   
     if (!team) {
       throw new CustomError.NotFoundError(`No team with id : ${teamId}`);
@@ -41,7 +40,7 @@ const getAllTeams = async (req, res) => {
 
 
 
- 
+
   const updateTeam = async (req, res) => {
     const { id: teamId } = req.params;
   
@@ -72,9 +71,6 @@ const getAllTeams = async (req, res) => {
     await product.remove();
     res.status(StatusCodes.OK).json({ msg: 'Success! team removed.' });
   };
-
-
-  
 
 module.exports = {
     createTeam,

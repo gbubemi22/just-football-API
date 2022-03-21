@@ -8,15 +8,13 @@ const {
     getAllPlayers,
     updatePlayer,
     deletePlayer,
-    uploadImage,
 } = require('../controllers/playerController')
 
 const {
     authenticateUser,
     authorizePermissions,
   } = require('../middleware/authentication');
-  
-  
+
 
 
 

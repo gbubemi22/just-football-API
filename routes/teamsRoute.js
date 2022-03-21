@@ -17,8 +17,6 @@ const {
 
 
 
-  
-
 router
 .route('/')
 .post(authenticateUser,authorizePermissions('superAdmin'),createTeam)
